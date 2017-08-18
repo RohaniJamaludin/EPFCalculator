@@ -43,8 +43,8 @@ public class ReadExcel {
             System.out.println(masterSheet.getRows());
             System.out.println(masterSheet.getColumns());
             
-            System.out.println(pbbSheet.getRows());
-            System.out.println(pbbSheet.getColumns());
+            System.out.println("PPB No of Rows :" + pbbSheet.getRows());
+            System.out.println("PBB no of Columns : " + pbbSheet.getColumns());
             
             dataList = new ArrayList<String[]>();
             
