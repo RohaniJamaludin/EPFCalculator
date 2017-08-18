@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Fri Aug 18 12:52:31 SGT 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-015d-f3af-7c67-000002fcb5c0 
+on database directory C:\EclipseWorkspace\EPFCalculator\jpdb with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
+Loaded from file:/C:/EclipseWorkspace/EPFCalculator/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_91-b15
+user.dir=C:\EclipseWorkspace\EPFCalculator
+os.name=Windows 7
+os.arch=amd64
+os.version=6.1
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
