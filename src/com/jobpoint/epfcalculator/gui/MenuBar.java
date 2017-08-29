@@ -6,24 +6,21 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 
-//import javax.swing.AbstractButton;
-//import javax.swing.JFileChooser;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+
 import com.jobpoint.epfcalculator.controller.EmployeeController;
 import com.jobpoint.epfcalculator.controller.EpfController;
 import com.jobpoint.epfcalculator.controller.SocsoController;
-import com.jobpoint.epfcalculator.model.Employee;
-
-//import com.jobpoint.epfcalculator.reader.ReadExcel;
 
 public class MenuBar implements ActionListener,ItemListener {
 	
 	JMenuBar menuBar;
 	JMenu menu, epfMenu, socsoMenu;
-	JMenuItem openMenu, showMenu, overSixtyEpfMenu, belowSixtyEpfMenu, overSixtySocsoMenu, belowSixtySocsoMenu;
+	JMenuItem insertMenu, exportMenu, overSixtyEpfMenu, belowSixtyEpfMenu, overSixtySocsoMenu, belowSixtySocsoMenu;
 
 	public JMenuBar createMenuBar() {
 		
@@ -34,17 +31,17 @@ public class MenuBar implements ActionListener,ItemListener {
 		menu.getAccessibleContext().setAccessibleDescription("The only menu in this program that has menu items");
 		menuBar.add(menu);
 		
-		openMenu = new JMenuItem("Insert Data");
-		openMenu.setMnemonic(KeyEvent.VK_T);
-		openMenu.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
-		openMenu.addActionListener(this);
-		menu.add(openMenu);
+		insertMenu = new JMenuItem("Insert Data");
+		insertMenu.setMnemonic(KeyEvent.VK_T);
+		insertMenu.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
+		insertMenu.addActionListener(this);
+		menu.add(insertMenu);
 		
-		showMenu = new JMenuItem("Export Data");
-		showMenu.setMnemonic(KeyEvent.VK_T);
-		showMenu.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
-		showMenu.addActionListener(this);
-		menu.add(showMenu);
+		exportMenu = new JMenuItem("Export Data");
+		exportMenu.setMnemonic(KeyEvent.VK_T);
+		exportMenu.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
+		exportMenu.addActionListener(this);
+		menu.add(exportMenu);
 		
 		menu = new JMenu("Setting");
 		menu.setMnemonic(KeyEvent.VK_A);
@@ -102,11 +99,17 @@ public class MenuBar implements ActionListener,ItemListener {
 	}
 	
 	public void actionPerformed(ActionEvent event) {
-		if(event.getSource() == openMenu) {
+		if(event.getSource() == insertMenu) {
 			
 			EmployeeController employeeController = new EmployeeController();
 			employeeController.insertEmployee(EmployeeMain.dashboard);
 			//employeeController.showEmployee();			
+		}
+		
+		if(event.getSource().equals(exportMenu)) {
+			EmployeeController employeeController = new EmployeeController();
+			employeeController.exportEmployee(EmployeeMain.dashboard);
+			
 		}
 		
 		if(event.getSource().equals(overSixtyEpfMenu)) {
@@ -128,8 +131,6 @@ public class MenuBar implements ActionListener,ItemListener {
 			SocsoController socsoController = new SocsoController();
 			socsoController.showSocso(true);
 		}
-		
-		
 	}
 
 	@Override

@@ -5,6 +5,7 @@ public class Employee {
 	private int no;
 	private String employeeNo;
     private String name;
+    private String nric;
     private double basicSalary;
     private double grossSalary;
     private double unpaidLeave;
@@ -15,12 +16,13 @@ public class Employee {
     private double employeeSocso;
     private int row;
  
-    public Employee(int no, String employeeNo, String name, double basicSalary, double grossSalary, double unpaidLeave,
+    public Employee(int no, String employeeNo, String name, String nric, double basicSalary, double grossSalary, double unpaidLeave,
     		double allowance, double employerEpf, double employerSocso, double employeeEpf, double employeeSocso, int row)
     {
         this.no = no;
         this.employeeNo = employeeNo;
         this.name = name;
+        this.nric = nric;
         this.basicSalary = basicSalary;
         this.grossSalary = grossSalary;
         this.allowance = allowance;
@@ -58,6 +60,14 @@ public class Employee {
     public void setName(String name)
     {
         this.name = name;
+    }
+    
+    public String getNric(){
+    	return nric;
+    }
+    
+    public void setNric(String nric){
+    	this.nric = nric;
     }
  
     public double getBasicSalary() {

@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import com.jobpoint.epfcalculator.database.CrudEpf;
 import com.jobpoint.epfcalculator.gui.EpfAdd;
 import com.jobpoint.epfcalculator.gui.EpfEdit;
@@ -23,6 +25,7 @@ public class EpfController {
 			epfList = crudEpf.findAll();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 		return epfList;
 	}
@@ -37,21 +40,23 @@ public class EpfController {
 				epfList = crudEpf.findAll(false);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 		
 		new EpfMain(epfList, isSixty);
 	}
 	
-	public Epf getEpf(Double basicSalaryAllowance) {
+	public Epf getEpf(Double basicSalaryAllowance, boolean isSixty) {
 		CrudEpf crudEpf = new CrudEpf();
 		
 		try {
 			Epf epf = new Epf();
-			epf = crudEpf.findByBoundLimit(basicSalaryAllowance);
+			epf = crudEpf.findByBoundLimit(basicSalaryAllowance, isSixty);
 			return epf;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage());
 			return null;
 		}
 	}
@@ -60,7 +65,7 @@ public class EpfController {
 		new EpfAdd(isSixty);
 	}
 
-	public void saveEpf(boolean isSixty) {
+	public boolean saveEpf(boolean isSixty) {
 		CrudEpf crudEpf = new CrudEpf();
 		
 		Epf epf = new Epf();
@@ -73,9 +78,11 @@ public class EpfController {
 		int id = crudEpf.saveNew(epf);
 		try {
 			EpfMain.model.addEpf(crudEpf.findById(id));
+			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 	}
 	
@@ -83,7 +90,7 @@ public class EpfController {
 		new EpfEdit(data, index, isSixty);
 	}
 	
-	public void updateEpf(int id, int index) {
+	public boolean updateEpf(int id, int index) {
 		Epf epf = new Epf();
 		epf.setId(id);
 		epf.setLowerBound(Double.parseDouble(EpfEdit.lowerBoundText.getText()));
@@ -94,17 +101,28 @@ public class EpfController {
 		CrudEpf crudEpf = new CrudEpf();
 		if(crudEpf.updateChange(epf)) {
 			EpfMain.model.updateEpf(index, epf);
+			return true;
 		}
+		return false;
 	}
 	
 	public boolean deleteEpf(int id, int index) {
 		CrudEpf crudEpf = new CrudEpf();
-		if(crudEpf.deleteRecord(id)) {
-			EpfMain.model.removeEpf(index);
-			return true;
-		}else {
-			return false;
-		}
+		
+		int response = JOptionPane.showConfirmDialog(null, 
+	            "Do you want to delete selected row?", 
+	            "Confirm", JOptionPane.YES_NO_OPTION, //
+	            JOptionPane.QUESTION_MESSAGE);
+	    if (response == JOptionPane.YES_OPTION) {
+	    	if(crudEpf.deleteRecord(id)) {
+				
+				EpfMain.model.removeEpf(index);
+				return true;
+			}
+	    }  
+	    
+	    return false;
+		
 	}
 	
 }

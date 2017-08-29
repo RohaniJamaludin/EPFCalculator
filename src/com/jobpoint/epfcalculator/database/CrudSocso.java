@@ -113,7 +113,7 @@ public List<Socso> findAll() throws SQLException {
 		return socso;
 	}
 	
-	public Socso findByBoundLimit(Double grossSalary) throws SQLException {
+	public Socso findByBoundLimit(Double grossSalary, boolean isSixty) throws SQLException {
 		connection = DriverManager.getConnection(ConnectDatabase.JDBC_URL);
 		statement = connection.createStatement();
 
@@ -121,9 +121,10 @@ public List<Socso> findAll() throws SQLException {
 		
 		String query = "";
 		if(grossSalary <= 4000) {
-			query = "Select * from socso where  lowerBound >= " + grossSalary + " AND upperBound <= " +  grossSalary ;
+			query = "Select * from socso where  lowerBound <= " + grossSalary + " AND upperBound >= " +  grossSalary +
+					" AND isSixty = " + isSixty;
 		}else {
-			query = "Select * from socso where  lowerBound >= " + grossSalary;
+			query = "Select * from socso where  lowerBound <= " + grossSalary + " AND isSixty = " + isSixty;
 		}
 		
 		ResultSet resultSet = statement.executeQuery(query);

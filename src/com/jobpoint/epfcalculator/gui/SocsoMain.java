@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -122,24 +123,29 @@ public class SocsoMain implements ActionListener{
 				
 					socsoController.editSocso(data, selection[indexRow], isSixty);				
 				}else {
-					System.out.println("More than 1 rows are selected");
+					JOptionPane.showMessageDialog(null, "More than one row selected. Please select only one row!");
 				}
 			}else {
-				System.out.println("No row is selected");
+				JOptionPane.showMessageDialog(null, "No row selected. Please select one row!");
 			}
 		
 		}
 	
 		if(event.getSource().equals(deleteButton)) {
-			System.out.println("Delete button clicked");
 			int[] selection = table.getSelectedRows();
+			
+			if(selection.length > 0) {
+				for(int i = selection.length - 1 ; i >= 0; i--) {
+					int id = (int) model.getValueAt(selection[i], 0); 
+					if(socsoController.deleteSocso(id, selection[i])) {
+						JOptionPane.showMessageDialog(null, "Row/s successfully deleted!");
+					}
+				}	
+			}else {
+				JOptionPane.showMessageDialog(null, "No row selected. Please select one or more rows!");
+			}
 		
-			for(int i = selection.length - 1 ; i >= 0; i--) {
-				int id = (int) model.getValueAt(selection[i], 0); 
-				if(socsoController.deleteSocso(id, selection[i])) {
-					System.out.println("Rows successfully deleted");
-				}
-			}			
+					
 		} 
 	
 	}

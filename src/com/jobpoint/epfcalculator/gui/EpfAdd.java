@@ -16,6 +16,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -210,14 +211,17 @@ public class EpfAdd implements ActionListener{
 				dialog.setSize(395,300);
 			}
 			
-			if(error) {
-				System.out.println("From value is invalid");
-			}else {
+			if(!error) {
 				System.out.println("Save");
 				//save 
 				EpfController epfController = new EpfController();
-				epfController.saveEpf(isSixty);
-				dialog.dispose();
+				if(epfController.saveEpf(isSixty)) {
+					dialog.dispose();
+					JOptionPane.showMessageDialog(null, "New data has been added!");
+				}else {
+					JOptionPane.showMessageDialog(null, "Data cannot be added!");
+				}
+				
 			}
 		}
 		

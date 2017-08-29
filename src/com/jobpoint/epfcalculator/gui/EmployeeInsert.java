@@ -23,6 +23,8 @@ import com.jobpoint.epfcalculator.controller.EmployeeController;
 
 public class EmployeeInsert  implements ActionListener{
 	public static JTextField sourceFileText;
+	public static JComboBox<String> yearCombo;
+	public static JComboBox<String> monthCombo;
 	private Dashboard dashboard;
 	private JDialog dialog; 
 	private JButton okButton;
@@ -119,7 +121,7 @@ public class EmployeeInsert  implements ActionListener{
 		String[] months = {"January", "February", "March", "April", "May", "June", "July", 
 				  			"August", "September", "October", "November", "December"}; 
 		
-		JComboBox<String> monthCombo = new JComboBox<>(months);
+		monthCombo = new JComboBox<>(months);
 		constraint.weightx = 0.5;
 		constraint.fill = GridBagConstraints.HORIZONTAL;
 		constraint.gridx = 1;
@@ -136,7 +138,7 @@ public class EmployeeInsert  implements ActionListener{
 			year++;
 		}
 		
-		JComboBox<String> yearCombo = new JComboBox<>(years);
+		yearCombo = new JComboBox<>(years);
 		yearCombo.setSelectedItem(Integer.toString(currentYear));
 		constraint.weightx = 0.5;
 		constraint.fill = GridBagConstraints.HORIZONTAL;
@@ -165,21 +167,6 @@ public class EmployeeInsert  implements ActionListener{
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		dialog.setVisible(true);
 		
-	}
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					new EmployeeInsert();
-					//frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-
 	}
 
 	@Override

@@ -10,13 +10,13 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
 import com.jobpoint.epfcalculator.controller.EpfController;
-import com.jobpoint.epfcalculator.database.CreateDatabase;
 import com.jobpoint.epfcalculator.model.Epf;
 
 public class EpfMain implements ActionListener{
@@ -107,12 +107,10 @@ public class EpfMain implements ActionListener{
 		// TODO Auto-generated method stub
 		EpfController epfController = new EpfController();
 		if(event.getSource().equals(addButton)) {
-			System.out.println("Add button clicked");
 			epfController.newEpf(isSixty);
 		}
 		
 		if(event.getSource().equals(editButton)) {
-			System.out.println("Edit button clicked");
 			int[] selection = table.getSelectedRows();
 			
 			if(selection.length > 0) {
@@ -128,46 +126,31 @@ public class EpfMain implements ActionListener{
 					
 					epfController.editEpf(data, selection[indexRow], isSixty);				
 				}else {
-					System.out.println("More than 1 rows are selected");
+					JOptionPane.showMessageDialog(null, "More than one row selected. Please select only one row!");
 				}
 			}else {
-				System.out.println("No row is selected");
+				JOptionPane.showMessageDialog(null, "No row selected. Please select one row!");
 			}
 			
 		}
 		
 		if(event.getSource().equals(deleteButton)) {
-			System.out.println("Delete button clicked");
 			int[] selection = table.getSelectedRows();
 			
-			for(int i = selection.length - 1 ; i >= 0; i--) {
-				
-				int id = (int) model.getValueAt(selection[i], 0); 
-
-				if(epfController.deleteEpf(id, selection[i])) {
-					System.out.println("Rows successfully deleted");
-				}
+			if(selection.length > 0) {
+				for(int i = selection.length - 1 ; i >= 0; i--) {
 					
+					int id = (int) model.getValueAt(selection[i], 0); 
+
+					if(epfController.deleteEpf(id, selection[i])) {
+						JOptionPane.showMessageDialog(null, "Row/s successfully deleted!");
+					}
+				}		
+			}else {
+				JOptionPane.showMessageDialog(null, "No row selected. Please select one or more rows!");
+			}
 				
-			}			
 		} 
 	}
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CreateDatabase.startDatabase();
-					//new EpfMain(epfList);  
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
-		
-	}
-	
-	
 
 }

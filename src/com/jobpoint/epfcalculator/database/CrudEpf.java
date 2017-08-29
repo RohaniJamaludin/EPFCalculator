@@ -122,15 +122,15 @@ public List<Epf> findAll(boolean isSixty) throws SQLException {
 		return epf;
 	}
 	
-	public Epf findByBoundLimit(Double basicSalaryAllowance) throws SQLException {
+	public Epf findByBoundLimit(Double basicSalaryAllowance, boolean isSixty) throws SQLException {
 		connection = DriverManager.getConnection(ConnectDatabase.JDBC_URL);
 		statement = connection.createStatement();
 		
 		Epf epf = new Epf();
 		
-		String query = "Select * from epf where  lowerBound >= " + basicSalaryAllowance + 
-				                           " AND upperBound <= " +  basicSalaryAllowance +
-				                           " AND isSixty = ";
+		String query = "Select * from epf where  lowerBound <= " + basicSalaryAllowance + 
+				                           " AND upperBound >= " +  basicSalaryAllowance +
+				                           " AND isSixty = " + isSixty;
 		ResultSet resultSet = statement.executeQuery(query);
 		
 		while(resultSet.next()) {

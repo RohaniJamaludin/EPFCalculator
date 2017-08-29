@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.jobpoint.epfcalculator.gui.EmployeeInsert;
+import javax.swing.JOptionPane;
 
 //import jxl.Cell;
 //import jxl.CellType;
@@ -18,7 +18,6 @@ public class ReadExcel {
     private String inputFile;
     File file;
     //Object[][] employee;
-    private List<String[]> dataList;
     
     public ReadExcel() {
     	
@@ -32,55 +31,69 @@ public class ReadExcel {
         this.inputFile = inputFile;
     }
     
-    public List<String[]> readFile() throws IOException {
-    	File inputWorkbook = new File(EmployeeInsert.sourceFileText.getText());
+    public List<List<String[]>> readMaster(String filePath){
+    	File inputWorkbook = new File(filePath);
     	Workbook w;
+    	List<String[]> dataListMaster = new ArrayList<String[]>();
+    	List<String[]> dataListPbb = new ArrayList<String[]>();
+    	
     	try {
             w = Workbook.getWorkbook(inputWorkbook);
             Sheet masterSheet = w.getSheet("MASTER");
             Sheet pbbSheet = w.getSheet("PBB");
-            
-            System.out.println(masterSheet.getRows());
-            System.out.println(masterSheet.getColumns());
-            
-            System.out.println("PPB No of Rows :" + pbbSheet.getRows());
-            System.out.println("PBB no of Columns : " + pbbSheet.getColumns());
-            
-            dataList = new ArrayList<String[]>();
-            
-            System.out.println("Column count = " + masterSheet.getColumns());
+           
             ValidateDataInput validateDataInput = new ValidateDataInput();
             
-            for(int i = 0; i < masterSheet.getRows(); i++) {
-           		 if(validateDataInput.isNumeric((String)masterSheet.getCell(0, i).getContents())){
-           			String[] data = new String[12];
-           			data[0] = masterSheet.getCell(0, i).getContents();
-           			data[1] = masterSheet.getCell(1, i).getContents();
-           			data[2] = masterSheet.getCell(2, i).getContents();
-           			data[3] = masterSheet.getCell(3, i).getContents();
-           			data[4] = masterSheet.getCell(5, i).getContents();
-           			data[5] = masterSheet.getCell(16, i).getContents();
-           			data[6] = masterSheet.getCell(19, i).getContents();
-           			data[7] = masterSheet.getCell(20, i).getContents();
-           			data[8] = masterSheet.getCell(21, i).getContents();
-           			data[9] = masterSheet.getCell(22, i).getContents();
-           			data[10] = masterSheet.getCell(23, i).getContents();
-           			data[11] = String.valueOf(masterSheet.getCell(0, i).getRow());
-           			dataList.add(data);
-           			for(String[] arrList : dataList) {
-           				System.out.println("No = " + arrList[0]);
-           				System.out.println("EmployeeNo = " + arrList[1]);
-           			}
-           		 }
-           }
+            if(masterSheet != null) {
+            	 for(int i = 0; i < masterSheet.getRows(); i++) {
+               		 if(validateDataInput.isNumeric((String)masterSheet.getCell(0, i).getContents())){
+               			String[] data = new String[12];
+               			data[0] = masterSheet.getCell(0, i).getContents();
+               			data[1] = masterSheet.getCell(1, i).getContents();
+               			data[2] = masterSheet.getCell(2, i).getContents();
+               			data[3] = masterSheet.getCell(3, i).getContents();
+               			data[4] = masterSheet.getCell(5, i).getContents();
+               			data[5] = masterSheet.getCell(16, i).getContents();
+               			data[6] = masterSheet.getCell(20, i).getContents();
+               			data[7] = String.valueOf(masterSheet.getCell(0, i).getRow());
+               			dataListMaster.add(data);
+               			/*for(String[] arrList : dataListMaster) {
+               				System.out.println("No = " + arrList[0]);
+               				System.out.println("EmployeeNo = " + arrList[1]);
+               			}*/
+               		 }
+               }
+                
+               for(int i = 0; i < pbbSheet.getRows(); i++) {
+            	   if(validateDataInput.isNumeric((String)pbbSheet.getCell(0, i).getContents())) {
+            		   String[] data = new String[2];
+            		   data[0] = pbbSheet.getCell(1, i).getContents();
+            		   data[1] = pbbSheet.getCell(3, i).getContents();
+            		   dataListPbb.add(data);
+            		  /* for(String[] arrList : dataListPbb) {
+              				System.out.println("Employee No = " + arrList[0]);
+              				System.out.println("IC No = " + arrList[1]);
+              			}*/
+            	   }
+               }
+            }else {
+            	JOptionPane.showMessageDialog(null, "File format is not correct!");
+            }
             
-        } catch (BiffException e) {
+           
+            
+        } catch (BiffException | IOException e) {
             e.printStackTrace();
-        }
-    	return dataList;
+            JOptionPane.showMessageDialog(null, "File format is not correct!");
+        }  
+    	List<List<String[]>> dataArrayList = new ArrayList<List<String[]>>();
+    	dataArrayList.add(dataListMaster);
+    	dataArrayList.add(dataListPbb);
+		return dataArrayList;
     }
 
     private void read() throws IOException  {
+    	List<String[]> dataList;
         File inputWorkbook = new File(inputFile);
         Workbook w;
         try {
@@ -161,19 +174,15 @@ public class ReadExcel {
             	
         
            		 if(validateDataInput.isNumeric((String)masterSheet.getCell(0, i).getContents())){
-           			String[] data = new String[12];
+           			String[] data = new String[8];
            			data[0] = masterSheet.getCell(0, i).getContents();
            			data[1] = masterSheet.getCell(1, i).getContents();
            			data[2] = masterSheet.getCell(2, i).getContents();
            			data[3] = masterSheet.getCell(3, i).getContents();
            			data[4] = masterSheet.getCell(5, i).getContents();
            			data[5] = masterSheet.getCell(16, i).getContents();
-           			data[6] = masterSheet.getCell(19, i).getContents();
-           			data[7] = masterSheet.getCell(20, i).getContents();
-           			data[8] = masterSheet.getCell(21, i).getContents();
-           			data[9] = masterSheet.getCell(22, i).getContents();
-           			data[10] = masterSheet.getCell(23, i).getContents();
-           			data[11] = String.valueOf(masterSheet.getCell(0, i).getRow());
+           			data[6] = masterSheet.getCell(20, i).getContents();
+           			data[7] = String.valueOf(masterSheet.getCell(0, i).getRow());
            			dataList.add(data);
            			for(String[] arrList : dataList) {
            				System.out.println("No = " + arrList[0]);
@@ -227,15 +236,9 @@ public class ReadExcel {
         
     }
 
-    public List<String[]> openFile() throws IOException{
-       // ReadExcel test = new ReadExcel();
+    public void openFile() throws IOException{
         setInputFile(file.getPath());
         read();
-        for(String[] arrList : dataList) {
-        	System.out.println("No = " + arrList[0]);
-        	System.out.println("EmployeeNo = " + arrList[1]);
-        }
-		return dataList;
     }
 
 }

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableColumnModel;
 
 import com.jobpoint.epfcalculator.model.Employee;
 import com.jobpoint.epfcalculator.tool.LineNumberTableRowHeader;
@@ -21,6 +22,7 @@ public class EmployeeMain{
 	private boolean DEBUG = false;
 	public JPanel panel;
 	public static Dashboard dashboard;
+	public static String fileName;
 
 	public EmployeeMain() {
 		initializePanel();
@@ -40,8 +42,29 @@ public class EmployeeMain{
 		model = new EmployeeTableModel(employeeList);
 		
 		table = new JTable(model);
-		table.setPreferredScrollableViewportSize(new Dimension(800, 800));
+		table.setPreferredScrollableViewportSize(new Dimension(1200, 590));
 		table.setFillsViewportHeight(true);
+		
+		TableColumnModel tableColumnModelNo = table.getColumnModel();
+		tableColumnModelNo.removeColumn(tableColumnModelNo.getColumn(0));
+		
+		TableColumnModel tableColumnModelRow = table.getColumnModel();
+		tableColumnModelRow.removeColumn(tableColumnModelRow.getColumn(11));
+		
+		table.getColumnModel().getColumn(0).setPreferredWidth(100);//employee no
+		table.getColumnModel().getColumn(1).setPreferredWidth(200);//Name
+		table.getColumnModel().getColumn(2).setPreferredWidth(120);//Nric
+		table.getColumnModel().getColumn(3).setPreferredWidth(110);//Basic Salary
+		table.getColumnModel().getColumn(4).setPreferredWidth(110);//Gross Salary
+		table.getColumnModel().getColumn(5).setPreferredWidth(100);//Unpaid Leave
+		table.getColumnModel().getColumn(6).setPreferredWidth(80);//Allowance
+		table.getColumnModel().getColumn(7).setPreferredWidth(120);//Employer Epf
+		table.getColumnModel().getColumn(8).setPreferredWidth(120);//Employer Socso
+		table.getColumnModel().getColumn(9).setPreferredWidth(120);//Employee Epf
+		table.getColumnModel().getColumn(10).setPreferredWidth(170);//Employee Socso
+
+		
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
 		//JTable rowTable = new RowNumberTable(table);
 		

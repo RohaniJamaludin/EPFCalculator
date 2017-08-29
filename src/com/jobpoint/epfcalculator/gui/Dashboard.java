@@ -8,6 +8,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.jobpoint.epfcalculator.database.CreateDatabase;
+
+//import com.jobpoint.epfcalculator.database.CreateDatabase;
+
 
 public class Dashboard extends JFrame {
 
@@ -27,6 +31,7 @@ public class Dashboard extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					CreateDatabase.startDatabase();
 					Dashboard frame = new Dashboard();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -34,7 +39,6 @@ public class Dashboard extends JFrame {
 				}
 			}
 		});
-		
 		
 	}
 
@@ -50,8 +54,8 @@ public class Dashboard extends JFrame {
 		createLayout();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		setTitle("EPF Calculator");
-		setSize(new Dimension(800,600));
+		setTitle("EPF/SOCSO Calculator");
+		setSize(new Dimension(1200,700));
 		setLocationRelativeTo(null);
 		
 	}

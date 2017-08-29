@@ -16,6 +16,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -212,14 +213,15 @@ public class SocsoAdd implements ActionListener{
 						dialog.setSize(395,300);
 					}
 					
-					if(error) {
-						System.out.println("From value is invalid");
-					}else {
-						System.out.println("Save");
-						//save 
+					if(!error) {
 						SocsoController socsoController = new SocsoController();
-						socsoController.saveSocso(isSixty);
-						dialog.dispose();
+						if(socsoController.saveSocso(isSixty)) {
+							dialog.dispose();
+							JOptionPane.showMessageDialog(null, "New data has been added!");
+						}else {
+							JOptionPane.showMessageDialog(null, "New data cannot be added!");
+						}
+						
 					}
 				}
 				

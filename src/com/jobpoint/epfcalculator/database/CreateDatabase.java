@@ -16,7 +16,6 @@ public class CreateDatabase {
 		// TODO Auto-generated method stub
 		Class.forName(ConnectDatabase.DRIVER);
 		Connection connection = DriverManager.getConnection(ConnectDatabase.JDBC_URL);
-		
 		List<String[]> sqlQueryList = new ArrayList<String[]>();
 		
 		String[] sqlQueryEpf = {"Create table epf " +

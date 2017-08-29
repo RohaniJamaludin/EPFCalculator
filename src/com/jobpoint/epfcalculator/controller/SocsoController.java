@@ -4,7 +4,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import com.jobpoint.epfcalculator.database.CrudSocso;
+import com.jobpoint.epfcalculator.gui.EpfMain;
 import com.jobpoint.epfcalculator.gui.SocsoAdd;
 import com.jobpoint.epfcalculator.gui.SocsoEdit;
 import com.jobpoint.epfcalculator.gui.SocsoMain;
@@ -19,6 +22,7 @@ public class SocsoController {
 			socsoList = crudSocso.findAll();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 		return socsoList;
 	}
@@ -31,21 +35,23 @@ public class SocsoController {
 			socsoList = crudSocso.findAll(isSixty);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 		new SocsoMain(socsoList, isSixty);
 	}
 	
 	
-	public Socso getSocso(Double grossSalary) {
+	public Socso getSocso(Double grossSalary, boolean isSixty) {
 		CrudSocso crudSocso = new CrudSocso();
 		
 		try {
 			Socso socso = new Socso();
-			socso = crudSocso.findByBoundLimit(grossSalary);
+			socso = crudSocso.findByBoundLimit(grossSalary, isSixty);
 			return socso;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage());
 			return null;
 		}
 	}
@@ -68,10 +74,10 @@ public class SocsoController {
 		if(id != 0) {
 			try {
 				SocsoMain.model.addSocso(crudSocso.findById(id));
-				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return false;
 			}
 			return true;
 		}else {
@@ -94,22 +100,28 @@ public class SocsoController {
 		CrudSocso crudSocso = new CrudSocso();
 		if(crudSocso.updateChange(socso)) {
 			SocsoMain.model.updateSocso(index, socso);
+			JOptionPane.showMessageDialog(null, "Update data success!");
 			return true;
 		}else {
+			JOptionPane.showMessageDialog(null, "Data cannot be updated!");
 			return false;
 		}
 	}
 	
 	public boolean deleteSocso(int id, int index) {
 		CrudSocso crudSocso = new CrudSocso();
-		if(crudSocso.deleteRecord(id)) {
-			SocsoMain.model.removeSocso(index);
-			return true;
-		}else {
-			return false;
-		}
 		
-		
+		int response = JOptionPane.showConfirmDialog(null, 
+	            "Do you want to delete selected row?", 
+	            "Confirm", JOptionPane.YES_NO_OPTION, //
+	            JOptionPane.QUESTION_MESSAGE);
+	    if (response == JOptionPane.YES_OPTION) {
+	    	if(crudSocso.deleteRecord(id)) {
+	    		SocsoMain.model.removeSocso(index);
+				return true;
+			}
+	    }  
+	    return false;
 	}
 	
 	
