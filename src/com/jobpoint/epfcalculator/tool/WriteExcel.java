@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 
+import com.jobpoint.epfcalculator.controller.AppController;
 import com.jobpoint.epfcalculator.gui.EmployeeMain;
 
 import jxl.CellView;
@@ -42,7 +43,7 @@ public class WriteExcel {
         workbook.createSheet("Report", 0);
         WritableSheet excelSheet = workbook.getSheet(0);
         createLabel(excelSheet);
-        createContent(excelSheet);
+        createContent(excelSheet, "bgs");
 
         workbook.write();
         workbook.close();
@@ -62,9 +63,21 @@ public class WriteExcel {
 				workbook = Workbook.getWorkbook(new File(EmployeeMain.fileName));
 				WritableWorkbook writeWorkBook = Workbook.createWorkbook(file, workbook);
 				//WritableSheet excelSheet = workbook.getSheet(0);
-				WritableSheet masterSheet = writeWorkBook.getSheet(0);
-				System.out.println(masterSheet.getCell(7,7).getContents());
-		        createContent(masterSheet);
+				WritableSheet masterSheetBgs;
+				WritableSheet masterSheetZonage;
+				if(AppController.category == 1) {
+					masterSheetBgs = writeWorkBook.getSheet(0);
+					createContent(masterSheetBgs,"bgs");
+				}
+				
+				if(AppController.category == 2) {
+					masterSheetZonage = writeWorkBook.getSheet(0);
+					createContent(masterSheetZonage, "zonage");
+					masterSheetBgs = writeWorkBook.getSheet(2);
+					createContent(masterSheetBgs, "bgs");
+				}
+				
+		       
 		        writeWorkBook.write();
 		        writeWorkBook.close();
 			} catch (BiffException e) {
@@ -81,7 +94,7 @@ public class WriteExcel {
         // Lets automatically wrap the cells
         times.setWrap(true);
 
-        // create create a bold font with unterlines
+        // create create a bold font with underlines
         WritableFont times10ptBoldUnderline = new WritableFont(
                 WritableFont.TIMES, 10, WritableFont.BOLD, false,
                 UnderlineStyle.SINGLE);
@@ -99,7 +112,7 @@ public class WriteExcel {
         addCaption(sheet, 1, 0, "This is another header");
     }
     
-    private void createContent(WritableSheet sheet) throws WriteException,RowsExceededException {
+    private void createContent(WritableSheet sheet, String sheetName) throws WriteException,RowsExceededException {
     	// Lets calculate the sum of it
     	int rowCount = EmployeeMain.model.getRowCount();
     	
@@ -114,19 +127,23 @@ public class WriteExcel {
 
     	// now a bit of text
     	for (int row = 0 ; row < rowCount; row++) {
-    		int columnEmployerEpf = 21;
-    		int columnEmployerSocso = 22;
-    		int columnEmployeeEpf = 23;
-    		int columnEmployeeSocso = 24;
-    		System.out.println(EmployeeMain.model.getValueAt(row, 8));
+    		int columnEmployerEpf = 23;
+    		int columnEmployerSocso = 24;
+    		int columnEmployeeEpf = 25;
+    		int columnEmployeeSocso = 26;
+/*    		System.out.println(EmployeeMain.model.getValueAt(row, 8));
     		System.out.println(EmployeeMain.model.getValueAt(row, 9));
     		System.out.println(EmployeeMain.model.getValueAt(row, 10));
     		System.out.println(EmployeeMain.model.getValueAt(row, 11));
-    		System.out.println(EmployeeMain.model.getValueAt(row, 12));
-    		addNumber(sheet, (Integer)EmployeeMain.model.getValueAt(row, 12), columnEmployerEpf, (String)EmployeeMain.model.getValueAt(row, 8));
-    		addNumber(sheet, (Integer)EmployeeMain.model.getValueAt(row, 12), columnEmployerSocso, (String)EmployeeMain.model.getValueAt(row, 9));
-    		addNumber(sheet, (Integer)EmployeeMain.model.getValueAt(row, 12), columnEmployeeEpf, (String)EmployeeMain.model.getValueAt(row, 10));
-    		addNumber(sheet, (Integer)EmployeeMain.model.getValueAt(row, 12), columnEmployeeSocso, (String)EmployeeMain.model.getValueAt(row, 11));
+    		System.out.println(EmployeeMain.model.getValueAt(row, 12));*/
+    		if(EmployeeMain.model.getValueAt(row, 13).equals(sheetName)) {
+    			addNumber(sheet, (Integer)EmployeeMain.model.getValueAt(row, 12), columnEmployerEpf, (String)EmployeeMain.model.getValueAt(row, 8));
+    	    	addNumber(sheet, (Integer)EmployeeMain.model.getValueAt(row, 12), columnEmployerSocso, (String)EmployeeMain.model.getValueAt(row, 9));
+    	    	addNumber(sheet, (Integer)EmployeeMain.model.getValueAt(row, 12), columnEmployeeEpf, (String)EmployeeMain.model.getValueAt(row, 10));
+    	    	addNumber(sheet, (Integer)EmployeeMain.model.getValueAt(row, 12), columnEmployeeSocso, (String)EmployeeMain.model.getValueAt(row, 11));
+    		}
+    		
+    		
     		// First column
     		//addLabel(sheet, 0, i, "Boring text " + i);
     		// Second column

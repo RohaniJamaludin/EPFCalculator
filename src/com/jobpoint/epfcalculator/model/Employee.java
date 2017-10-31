@@ -15,9 +15,10 @@ public class Employee {
     private double employeeEpf;
     private double employeeSocso;
     private int row;
+    private String sheet;
  
     public Employee(int no, String employeeNo, String name, String nric, double basicSalary, double grossSalary, double unpaidLeave,
-    		double allowance, double employerEpf, double employerSocso, double employeeEpf, double employeeSocso, int row)
+    		double allowance, double employerEpf, double employerSocso, double employeeEpf, double employeeSocso, int row, String sheet)
     {
         this.no = no;
         this.employeeNo = employeeNo;
@@ -32,6 +33,7 @@ public class Employee {
         this.employeeEpf = employeeEpf;
         this.employeeSocso = employeeSocso;
         this.row = row;
+        this.sheet = sheet;
     }
     
     public int getNo()
@@ -140,6 +142,14 @@ public class Employee {
     
     public void setRow(int row) {
     	this.row = row;
+    }
+    
+    public String getSheet() {
+    	return sheet;
+    }
+    
+    public void setSheet(String sheet) {
+    	this.sheet = sheet;
     }
 
 }

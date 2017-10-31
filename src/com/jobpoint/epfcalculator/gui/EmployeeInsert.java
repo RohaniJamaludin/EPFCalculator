@@ -3,6 +3,7 @@ package com.jobpoint.epfcalculator.gui;
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -12,11 +13,13 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import com.jobpoint.epfcalculator.controller.EmployeeController;
@@ -30,6 +33,7 @@ public class EmployeeInsert  implements ActionListener{
 	private JButton okButton;
 	private JButton cancelButton;
 	private JButton browseButton;
+	public static JRadioButton categoryOneRadio, categoryTwoRadio;
 	
 	public EmployeeInsert() {
 		initialize();
@@ -50,7 +54,7 @@ public class EmployeeInsert  implements ActionListener{
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		dialog.getContentPane().add(mainPanel, BorderLayout.CENTER);
 		
-		JPanel footerPanel = new JPanel();
+		JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		footerPanel.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		footerPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 5, 20));
 		dialog.getContentPane().add(footerPanel, BorderLayout.PAGE_END);
@@ -58,36 +62,40 @@ public class EmployeeInsert  implements ActionListener{
 		GridBagConstraints constraint = new GridBagConstraints();
 		
 		JLabel sourceFileLabel = new JLabel("Source File");
-		constraint.weightx = 0.5;
 		constraint.fill = GridBagConstraints.HORIZONTAL;
 		constraint.gridx = 0;
 		constraint.gridy = 0;
+		constraint.gridwidth = 1;
+		constraint.weightx = 1;
 		constraint.insets = new Insets(0, 10, 2, 10);
 		mainPanel.add(sourceFileLabel,constraint);
 		
 		sourceFileText = new JTextField();
 		sourceFileText.setColumns(20);
-		constraint.weightx = 0.5;
 		constraint.fill = GridBagConstraints.HORIZONTAL;
 		constraint.gridx = 1;
 		constraint.gridy = 0;
-		constraint.insets = new Insets(0, 10, 2, 10);
+		constraint.gridwidth = 2;
+		constraint.weightx = 1;
+		constraint.insets = new Insets(0, 10, 2, 5);
 		mainPanel.add(sourceFileText,constraint);
 		
 		browseButton = new JButton("Browse File");
 		browseButton.addActionListener(this);
-		constraint.weightx = 0.5;
 		constraint.fill = GridBagConstraints.HORIZONTAL;
-		constraint.gridx = 2;
+		constraint.gridx = 3;
 		constraint.gridy = 0;
-		constraint.insets = new Insets(0, 10, 2, 10);
+		constraint.gridwidth = 1;
+		constraint.weightx = 1;
+		constraint.insets = new Insets(0, 0, 2, 10);
 		mainPanel.add(browseButton,constraint);
 		
-		JLabel salaryMonthLabel = new JLabel("Salary of Month");
-		constraint.weightx = 0.5;
+		JLabel salaryMonthLabel = new JLabel("Month");
 		constraint.fill = GridBagConstraints.HORIZONTAL;
 		constraint.gridx = 0;
 		constraint.gridy = 1;
+		constraint.gridwidth = 1;
+		constraint.weightx = 1;
 		constraint.insets = new Insets(0, 10, 2, 10);
 		mainPanel.add(salaryMonthLabel,constraint);
 		
@@ -122,11 +130,12 @@ public class EmployeeInsert  implements ActionListener{
 				  			"August", "September", "October", "November", "December"}; 
 		
 		monthCombo = new JComboBox<>(months);
-		constraint.weightx = 0.5;
 		constraint.fill = GridBagConstraints.HORIZONTAL;
 		constraint.gridx = 1;
 		constraint.gridy = 1;
-		constraint.insets = new Insets(0, 10, 2, 10);
+		constraint.gridwidth = 1;
+		constraint.weightx = 1;
+		constraint.insets = new Insets(0, 10, 2, 2);
 		mainPanel.add(monthCombo, constraint);
 		monthCombo.setSelectedItem(currentMonth);
 		
@@ -140,12 +149,45 @@ public class EmployeeInsert  implements ActionListener{
 		
 		yearCombo = new JComboBox<>(years);
 		yearCombo.setSelectedItem(Integer.toString(currentYear));
-		constraint.weightx = 0.5;
 		constraint.fill = GridBagConstraints.HORIZONTAL;
 		constraint.gridx = 2;
 		constraint.gridy = 1;
-		constraint.insets = new Insets(0, 10, 2, 10);
+		constraint.gridwidth = 1;
+		constraint.weightx = 1;
+		constraint.insets = new Insets(0, 0, 2, 10);
 		mainPanel.add(yearCombo, constraint);
+		
+		JLabel categoryLabel = new JLabel("Category");
+		constraint.fill = GridBagConstraints.HORIZONTAL;
+		constraint.gridx = 0;
+		constraint.gridy = 2;
+		constraint.gridwidth = 1;
+		constraint.weightx = 1;
+		constraint.insets = new Insets(0, 10, 2, 10);
+		mainPanel.add(categoryLabel,constraint);
+		
+		categoryOneRadio = new JRadioButton("Basic RM1100 - RM1350");
+		categoryOneRadio.setSelected(true);
+		constraint.fill = GridBagConstraints.HORIZONTAL;
+		constraint.gridx = 1;
+		constraint.gridy = 2;
+		constraint.gridwidth = 1;
+		constraint.weightx = 1;
+		constraint.insets = new Insets(0, 10, 2, 5);
+		mainPanel.add(categoryOneRadio,constraint);
+		
+		categoryTwoRadio = new JRadioButton("Basic RM1000");
+		constraint.fill = GridBagConstraints.HORIZONTAL;
+		constraint.gridx = 2;
+		constraint.gridy = 2;
+		constraint.gridwidth = 1;
+		constraint.weightx = 1;
+		constraint.insets = new Insets(0, 10, 2, 5);
+		mainPanel.add(categoryTwoRadio,constraint);
+		
+		ButtonGroup buttonGroup = new ButtonGroup();
+		buttonGroup.add(categoryOneRadio);
+		buttonGroup.add(categoryTwoRadio);
 		
 		dialog.getContentPane().add(footerPanel,BorderLayout.PAGE_END);
 		

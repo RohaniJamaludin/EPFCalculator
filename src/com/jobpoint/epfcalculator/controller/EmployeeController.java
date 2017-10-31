@@ -3,6 +3,7 @@ package com.jobpoint.epfcalculator.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -40,60 +41,76 @@ public class EmployeeController {
 		
 		String fileName = EmployeeInsert.sourceFileText.getText();
 		EmployeeMain.fileName = fileName;
-		List<List<String[]>> dataArrayList = readExcel.readMaster(fileName);
+		List<List<String[]>> dataArrayList;
+		
+		dataArrayList = EmployeeInsert.categoryOneRadio.isSelected() ?  readExcel.readMasterCategoryOne(fileName): 
+			readExcel.readMasterCategoryTwo(fileName) ;
 		List<String[]> dataListMaster = dataArrayList.get(0);
 		List<String[]> dataListPbb = dataArrayList.get(1);
+
+		for( int i = 0 ; i < dataListMaster.size(); i++) {
+			String[] dataList = dataListMaster.get(i);
+			if(dataList[dataList.length-1].equals("zonage")){
+				for(int l = 0; l < dataList.length; l++ ) {
+					System.out.println(dataList[l]);
+				}
+			}
 			
-	/*		for(String[] arrList : dataListPbb) {
-  				System.out.println("Employee No = " + arrList[0]);
-  				System.out.println("IC No = " + arrList[1]);
-  			}
-		*/
+		}
+		
+		for( int i = 0 ; i < dataListMaster.size(); i++) {
+			String[] dataList = dataListMaster.get(i);
+			if(dataList[dataList.length-1].equals("bgs")){
+				for(int l = 0; l < dataList.length; l++ ) {
+					System.out.println(dataList[l]);
+				}
+			}
 			
+		}
+		
 			for( int i = 0 ; i < dataListMaster.size(); i++) {
-				String[] data = dataListMaster.get(i);
-				int no = Integer.valueOf((String)data[0]);
-				String employeeNo = (String)data[1];
+				String[] dataMaster = dataListMaster.get(i);
+				
+				int no = Integer.valueOf((String)dataMaster[0]);
+				String employeeNo = (String)dataMaster[1];
 				
 				int index = 0;
 				
 				boolean isSixty = false;
 				String nric = "";
 				
-				for(String[] arrList : dataListPbb) {
-	  				if( employeeNo == arrList[0]) {
-	  					nric = arrList[1];
-	  					
-	  					System.out.println(nric);
-	  				    int birthYear = Integer.valueOf(nric.substring(0, 2));
-	  					if(birthYear > 10 ) {
-	  						birthYear = 1900 + birthYear;
-	  					}else {
-	  						birthYear = 2000 + birthYear;
-	  					}
-	  					String birthMonth = nric.substring(2, 4);
-	  					String birthDay = nric.substring(4, 6);
-	  					
-	  					String salaryMonthName = EmployeeInsert.monthCombo.getSelectedItem().toString();
+				for(String[] dataPbb : dataListPbb) {
+					if(employeeNo.equals(dataPbb[0])) {
+						nric = dataPbb[1];
+						
+						int birthYear = Integer.valueOf(nric.substring(0, 2));
+		  				if(birthYear > 10 ) {
+		  					birthYear = 1900 + birthYear;
+		  				}else {
+		  					birthYear = 2000 + birthYear;
+		  				}
+		  				String birthMonth = nric.substring(2, 4);
+		  				String birthDay = nric.substring(4, 6);
+		  					
+						String salaryMonthName = EmployeeInsert.monthCombo.getSelectedItem().toString();
 	  					int salaryYear = Integer.valueOf(EmployeeInsert.yearCombo.getSelectedItem().toString());
-	  					
+		  					
 	  					String birthDate = birthYear + "-" + birthMonth + "-" + birthDay;
-	  					String salaryDate = String.format("01-%s-%d", salaryMonthName, salaryYear);
-	  					Age age = new Age();
-	  					if(age.getAge(birthDate,salaryDate) >= 60) {
-	  						isSixty = true;
+		  				String salaryDate = String.format("01-%s-%d", salaryMonthName, salaryYear);
+		  				Age age = new Age();
+		  				if(age.getAge(birthDate,salaryDate) >= 60) {
+							isSixty = true;
 	  					}
-	  					dataListPbb.remove(index);
+	  					dataListPbb.remove(index);			  					
 	  					break;
-	  				}
-	  				index++;
-	  			}
-				
-	       		String name = (String)data[2];
-	       		Double basicSalary = Double.valueOf((String)data[3]);
-	       		Double unpaidLeave =  Double.valueOf((String)data[4]);
-	       		Double allowance = Double.valueOf((String)data[5]);
-	       		Double grossSalary = Double.valueOf((String)data[6]);
+					}
+					index++;
+				}
+				String name = (String)dataMaster[2];
+	       		Double basicSalary = Double.valueOf((String)dataMaster[3]);
+	       		Double unpaidLeave =  Double.valueOf(!dataMaster[4].equals("")?(String)dataMaster[4]:"0");
+	       		Double allowance = Double.valueOf(!dataMaster[5].equals("")?(String)dataMaster[5]:"0");
+	       		Double grossSalary = Double.valueOf((String)dataMaster[6]);
 	       		
 	       		Double basicSalaryAllowance = basicSalary + allowance - unpaidLeave;
 	       		
@@ -107,9 +124,10 @@ public class EmployeeController {
 	       		Double employerSocso = socso.getEmployerShare();
 	       		Double employeeEpf = epf.getEmployeeShare();
 	       		Double employeeSocso = socso.getEmployeeShare();
-	       		int row = Integer.valueOf((String)data[7]); //
+	       		int row = Integer.valueOf((String)dataMaster[7]); //
+	       		String sheet = dataMaster[8];
 	       		EmployeeMain.model.addEmployee(new Employee(no, employeeNo, name, nric, basicSalary, grossSalary, unpaidLeave, allowance, employerEpf, employerSocso,
-						employeeEpf, employeeSocso, row));
+						employeeEpf, employeeSocso, row, sheet));
 			}
 		
 		
@@ -141,13 +159,16 @@ public class EmployeeController {
 				}
 				
 				String fileName = fileChooser.getSelectedFile().getAbsolutePath();
+				String fileNameCopy = fileName;
 				if(!fileName.endsWith(".xlsx") && !fileName.endsWith(".xls")) {
+					fileNameCopy = fileName + "-copy" + extension;
 					fileName = fileName + extension;
+					
 				}
 				
 				System.out.println(fileName);
 				File newFile = new File(fileName);
-				
+				File newFileCopy = new File(fileNameCopy);
 				
 				System.out.println(newFile.getAbsolutePath());
 				if (newFile.exists()) {
@@ -165,7 +186,7 @@ public class EmployeeController {
 				File oldFile = new File(EmployeeMain.fileName);
 				
 				CopyFile copyFile = new CopyFile();
-				if(copyFile.duplicateFile(oldFile, newFile)){
+				if(copyFile.duplicateFile2(oldFile, newFile, newFileCopy)){
 					WriteExcel writeExcel = new WriteExcel();
 					try {
 						writeExcel.write(newFile);

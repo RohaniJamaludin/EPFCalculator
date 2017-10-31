@@ -16,7 +16,7 @@ public class EmployeeTableModel extends AbstractTableModel {
 	
 	private final String[] columnNames = new String[] {
 			"No.", "Employee No.", "Name", "NRIC", "Basic Salary", "Gross Salary", "Unpaid Leave", "Allowance",
-			"Employer Epf", "Employer Socso", "Employee Epf", "Employee Socso", "Row in Excel"
+			"Employer Epf", "Employer Socso", "Employee Epf", "Employee Socso", "Row in Excel", "Worksheet"
     };
 	
 	public EmployeeTableModel(List<Employee> employee) {
@@ -94,6 +94,9 @@ public class EmployeeTableModel extends AbstractTableModel {
         }
         else if(12 == columnIndex) {
         	return row.getRow();
+        }
+        else if(13 == columnIndex) {
+        	return row.getSheet();
         }
         return null;
     }

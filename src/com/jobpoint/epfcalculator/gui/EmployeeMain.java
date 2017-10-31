@@ -61,7 +61,8 @@ public class EmployeeMain{
 		table.getColumnModel().getColumn(7).setPreferredWidth(120);//Employer Epf
 		table.getColumnModel().getColumn(8).setPreferredWidth(120);//Employer Socso
 		table.getColumnModel().getColumn(9).setPreferredWidth(120);//Employee Epf
-		table.getColumnModel().getColumn(10).setPreferredWidth(170);//Employee Socso
+		table.getColumnModel().getColumn(10).setPreferredWidth(120);//Employee Socso
+		table.getColumnModel().getColumn(11).setPreferredWidth(150);//Worksheet Name
 
 		
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
