@@ -25,6 +25,8 @@ public class CreateDatabase {
 				"lowerBound decimal(6,2) not null, " +
 				"employerShare decimal(6,2) not null, " +
 				"employeeShare decimal(6,2) not null, " +
+				"isSixty boolean not null, " +
+				"percentage int not null, " +
 				"PRIMARY KEY (id))", "epf"};
 		sqlQueryList.add(sqlQueryEpf);
 		
@@ -35,6 +37,8 @@ public class CreateDatabase {
 				"lowerBound decimal(6,2) not null, " +
 				"employerShare decimal(6,2) not null, " +
 				"employeeShare decimal(6,2) not null, " +
+				"isSixty boolean not null, " +
+				"percentage int not null, " +
 				"PRIMARY KEY (id))", "socso"};
 		sqlQueryList.add(sqlQuerySocso);
 		

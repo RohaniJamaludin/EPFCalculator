@@ -37,26 +37,28 @@ public class EpfEdit implements ActionListener{
 	private int index;
 	private int id;
 	private boolean isSixty;
+	private int percentage;
 	
 	
-	public EpfEdit (Object[] data, int index, boolean isSixty) {
+	public EpfEdit (Object[] data, int index, boolean isSixty, int percentage) {
 		this.isSixty = isSixty;
 		this.index = index;
 		this.data = data;
+		this.percentage = percentage;
 		initialize();
 	}
 	
 	private void initialize() {
 		EpfMain.footerPanel.getComponent(1).setEnabled(false); 
 		
-		String s;
+		String age;
 		if(isSixty) {
-			s = "Above 60";
+			age = "Above 60";
 		}else {
-			s = "Below 60";
+			age = "Below 60";
 		}
 		
-		dialog = new JDialog(EpfMain.frame,"Edit EPF Contribution Rate " + s, true);
+		dialog = new JDialog(EpfMain.frame,"Edit EPF Contribution Rate " + age + "(" + percentage + "%)", true);
 		dialog.addWindowListener(new WindowAdapter() {
 			public void  windowClosed(WindowEvent event) {
 				System.out.println("Closed");

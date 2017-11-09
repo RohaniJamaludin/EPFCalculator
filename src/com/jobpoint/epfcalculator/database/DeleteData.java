@@ -14,7 +14,7 @@ public class DeleteData {
 		//Class.forName(DRIVER);
 		Connection connection = DriverManager.getConnection(JDBC_URL);
 		//connection.createStatement().execute("Create table channels(channel varchar(20), topiv varchar(20), videoclip varchar(20))");
-		connection.createStatement().execute("Delete from APP.EPF");
+		connection.createStatement().execute("Delete from APP.EPF where id = 3001");
 		System.out.println("channels table created and records successfully inserted ....");
 	}
 

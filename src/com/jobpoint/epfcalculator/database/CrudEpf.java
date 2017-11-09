@@ -58,13 +58,13 @@ public class CrudEpf {
 		
 	}
 	
-public List<Epf> findAll(boolean isSixty) throws SQLException {
+public List<Epf> findAll(boolean isSixty, int percentage) throws SQLException {
 		
 		connection = DriverManager.getConnection(ConnectDatabase.JDBC_URL);
 		statement = connection.createStatement();
 		
 		String query; 
-		query = "Select * from epf where isSixty = " + isSixty +
+		query = "Select * from epf where isSixty = " + isSixty + " AND percentage = " + percentage +
 				" order by lowerBound ASC";
 		
 		ResultSet resultSet;
@@ -122,7 +122,7 @@ public List<Epf> findAll(boolean isSixty) throws SQLException {
 		return epf;
 	}
 	
-	public Epf findByBoundLimit(Double basicSalaryAllowance, boolean isSixty) throws SQLException {
+	public Epf findByBoundLimit(Double basicSalaryAllowance, boolean isSixty, int percentage) throws SQLException {
 		connection = DriverManager.getConnection(ConnectDatabase.JDBC_URL);
 		statement = connection.createStatement();
 		
@@ -130,7 +130,8 @@ public List<Epf> findAll(boolean isSixty) throws SQLException {
 		
 		String query = "Select * from epf where  lowerBound <= " + basicSalaryAllowance + 
 				                           " AND upperBound >= " +  basicSalaryAllowance +
-				                           " AND isSixty = " + isSixty;
+				                           " AND isSixty = " + isSixty +
+				                           " AND percentage = " + percentage;
 		ResultSet resultSet = statement.executeQuery(query);
 		
 		while(resultSet.next()) {
@@ -150,9 +151,9 @@ public List<Epf> findAll(boolean isSixty) throws SQLException {
 	public int saveNew(Epf epf) {
 		int id = 0;
 		
-		String query = "insert into epf (lowerBound, upperBound, employerShare, employeeShare, isSixty) values " + 
+		String query = "insert into epf (lowerBound, upperBound, employerShare, employeeShare, isSixty, percentage) values " + 
 				"(" + epf.getLowerBound() + ", " + epf.getUpperBound() + ", " + 
-					epf.getEmployerShare() + ", " + epf.getEmployeeShare() + ", " + epf.getIsSixty() + ")";
+					epf.getEmployerShare() + ", " + epf.getEmployeeShare() + ", " + epf.getIsSixty() + ", " + epf.getPercentage() +")";
 	
 		
 		try {

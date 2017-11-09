@@ -39,10 +39,12 @@ public class EmployeeController {
    		EpfController epfController = new EpfController();
    		SocsoController socsoController = new SocsoController();
 		
+   		int percentage;
 		String fileName = EmployeeInsert.sourceFileText.getText();
 		EmployeeMain.fileName = fileName;
 		List<List<String[]>> dataArrayList;
 		
+		percentage = EmployeeInsert.eightPercentRadio.isSelected() ? 8 : 11;
 		dataArrayList = EmployeeInsert.categoryOneRadio.isSelected() ?  readExcel.readMasterCategoryOne(fileName): 
 			readExcel.readMasterCategoryTwo(fileName) ;
 		List<String[]> dataListMaster = dataArrayList.get(0);
@@ -115,7 +117,7 @@ public class EmployeeController {
 	       		Double basicSalaryAllowance = basicSalary + allowance - unpaidLeave;
 	       		
 	       		Epf epf = new Epf();
-	       		epf = epfController.getEpf(basicSalaryAllowance, isSixty);
+	       		epf = epfController.getEpf(basicSalaryAllowance, isSixty, percentage);
 	       		
 	       		Socso socso = new Socso();
 	       		socso = socsoController.getSocso(grossSalary, isSixty);

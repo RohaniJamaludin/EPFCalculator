@@ -30,28 +30,28 @@ public class EpfController {
 		return epfList;
 	}
 	
-	public void showEpf(boolean isSixty){
+	public void showEpf(boolean isSixty, int percentage){
 		CrudEpf crudEpf = new CrudEpf();
 		List<Epf> epfList = new ArrayList<Epf>();
 		try {
 			if(isSixty)
-				epfList = crudEpf.findAll(true);
+				epfList = crudEpf.findAll(true, percentage);
 			else
-				epfList = crudEpf.findAll(false);
+				epfList = crudEpf.findAll(false, percentage);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 		
-		new EpfMain(epfList, isSixty);
+		new EpfMain(epfList, isSixty, percentage);
 	}
 	
-	public Epf getEpf(Double basicSalaryAllowance, boolean isSixty) {
+	public Epf getEpf(Double basicSalaryAllowance, boolean isSixty, int percentage) {
 		CrudEpf crudEpf = new CrudEpf();
 		
 		try {
 			Epf epf = new Epf();
-			epf = crudEpf.findByBoundLimit(basicSalaryAllowance, isSixty);
+			epf = crudEpf.findByBoundLimit(basicSalaryAllowance, isSixty, percentage);
 			return epf;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -61,11 +61,11 @@ public class EpfController {
 		}
 	}
 	
-	public void newEpf(boolean isSixty) {
-		new EpfAdd(isSixty);
+	public void newEpf(boolean isSixty, int percentage) {
+		new EpfAdd(isSixty, percentage);
 	}
 
-	public boolean saveEpf(boolean isSixty) {
+	public boolean saveEpf(boolean isSixty, int percentage) {
 		CrudEpf crudEpf = new CrudEpf();
 		
 		Epf epf = new Epf();
@@ -74,6 +74,7 @@ public class EpfController {
 		epf.setEmployerShare(Double.parseDouble(EpfAdd.employerShareText.getText()));
 		epf.setEmployeeShare(Double.parseDouble(EpfAdd.employeeShareText.getText()));
 		epf.setIsSixty(isSixty);
+		epf.setPercentage(percentage);
 		
 		int id = crudEpf.saveNew(epf);
 		try {
@@ -86,8 +87,8 @@ public class EpfController {
 		}
 	}
 	
-	public void editEpf(Object[] data, int index, boolean isSixty) {
-		new EpfEdit(data, index, isSixty);
+	public void editEpf(Object[] data, int index, boolean isSixty, int percentage) {
+		new EpfEdit(data, index, isSixty, percentage);
 	}
 	
 	public boolean updateEpf(int id, int index) {

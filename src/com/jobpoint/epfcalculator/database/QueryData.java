@@ -10,7 +10,8 @@ import java.sql.Statement;
 public class QueryData {
 	
 	public static final String JDBC_URL = "jdbc:derby:jpdb;create=true";
-	public static final String SQL_STATEMENT = "Select * from socso where  lowerBound <= 2920.67 AND upperBound >= 2920.67 AND isSixty = false";
+	//public static final String SQL_STATEMENT = "Select * from socso where  lowerBound <= 2920.67 AND upperBound >= 2920.67 AND isSixty = false";
+	public static final String SQL_STATEMENT = "Select * from epf where percentage= 11";
 	public static void main(String[] args) throws SQLException {
 		// TODO Auto-generated method stub
 		Connection connection = DriverManager.getConnection(JDBC_URL);

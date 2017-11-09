@@ -33,7 +33,7 @@ public class EmployeeInsert  implements ActionListener{
 	private JButton okButton;
 	private JButton cancelButton;
 	private JButton browseButton;
-	public static JRadioButton categoryOneRadio, categoryTwoRadio;
+	public static JRadioButton categoryOneRadio, categoryTwoRadio, eightPercentRadio, elevenPercentRadio;
 	
 	public EmployeeInsert() {
 		initialize();
@@ -157,10 +157,42 @@ public class EmployeeInsert  implements ActionListener{
 		constraint.insets = new Insets(0, 0, 2, 10);
 		mainPanel.add(yearCombo, constraint);
 		
-		JLabel categoryLabel = new JLabel("Category");
+		JLabel percentageLabel = new JLabel("Percentage");
 		constraint.fill = GridBagConstraints.HORIZONTAL;
 		constraint.gridx = 0;
 		constraint.gridy = 2;
+		constraint.gridwidth = 1;
+		constraint.weightx = 1;
+		constraint.insets = new Insets(0, 10, 2, 10);
+		mainPanel.add(percentageLabel,constraint);
+		
+		eightPercentRadio = new JRadioButton("8%");
+		eightPercentRadio.setSelected(true);
+		constraint.fill = GridBagConstraints.HORIZONTAL;
+		constraint.gridx = 1;
+		constraint.gridy = 2;
+		constraint.gridwidth = 1;
+		constraint.weightx = 1;
+		constraint.insets = new Insets(0, 10, 2, 5);
+		mainPanel.add(eightPercentRadio,constraint);
+		
+		elevenPercentRadio = new JRadioButton("11%");
+		constraint.fill = GridBagConstraints.HORIZONTAL;
+		constraint.gridx = 2;
+		constraint.gridy = 2;
+		constraint.gridwidth = 1;
+		constraint.weightx = 1;
+		constraint.insets = new Insets(0, 10, 2, 5);
+		mainPanel.add(elevenPercentRadio,constraint);
+		
+		ButtonGroup percentButtonGroup = new ButtonGroup();
+		percentButtonGroup.add(eightPercentRadio);
+		percentButtonGroup.add(elevenPercentRadio);
+		
+		JLabel categoryLabel = new JLabel("Category");
+		constraint.fill = GridBagConstraints.HORIZONTAL;
+		constraint.gridx = 0;
+		constraint.gridy = 3;
 		constraint.gridwidth = 1;
 		constraint.weightx = 1;
 		constraint.insets = new Insets(0, 10, 2, 10);
@@ -170,7 +202,7 @@ public class EmployeeInsert  implements ActionListener{
 		categoryOneRadio.setSelected(true);
 		constraint.fill = GridBagConstraints.HORIZONTAL;
 		constraint.gridx = 1;
-		constraint.gridy = 2;
+		constraint.gridy = 3;
 		constraint.gridwidth = 1;
 		constraint.weightx = 1;
 		constraint.insets = new Insets(0, 10, 2, 5);
@@ -179,15 +211,15 @@ public class EmployeeInsert  implements ActionListener{
 		categoryTwoRadio = new JRadioButton("Basic RM1000");
 		constraint.fill = GridBagConstraints.HORIZONTAL;
 		constraint.gridx = 2;
-		constraint.gridy = 2;
+		constraint.gridy = 3;
 		constraint.gridwidth = 1;
 		constraint.weightx = 1;
 		constraint.insets = new Insets(0, 10, 2, 5);
 		mainPanel.add(categoryTwoRadio,constraint);
 		
-		ButtonGroup buttonGroup = new ButtonGroup();
-		buttonGroup.add(categoryOneRadio);
-		buttonGroup.add(categoryTwoRadio);
+		ButtonGroup categoryButtonGroup = new ButtonGroup();
+		categoryButtonGroup.add(categoryOneRadio);
+		categoryButtonGroup.add(categoryTwoRadio);
 		
 		dialog.getContentPane().add(footerPanel,BorderLayout.PAGE_END);
 		

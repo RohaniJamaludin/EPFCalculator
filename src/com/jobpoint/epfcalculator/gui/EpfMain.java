@@ -30,11 +30,13 @@ public class EpfMain implements ActionListener{
 	private JTable table;
 	private List<Epf> epfList;
 	private boolean isSixty;
+	private int percentage;
 	
 	
-	public EpfMain(List<Epf> epfList, boolean isSixty) {
+	public EpfMain(List<Epf> epfList, boolean isSixty, int percentage) {
 		this.epfList = epfList;
 		this.isSixty = isSixty;
+		this.percentage = percentage;
 		initialize();
 	}
 	
@@ -50,19 +52,17 @@ public class EpfMain implements ActionListener{
 		table.setPreferredScrollableViewportSize(new Dimension(800, 800));
 		table.setFillsViewportHeight(true);
 		
-		String s = "";
+		String age = "";
 		if(isSixty) {
-			s = "Above 60";
+			age = "Above 60";
 		}else {
-			s = "Below 60";
+			age = "Below 60";
 		}
 		
-		frame = new JFrame("EPF Contribution Rate Table " + s);
+		frame = new JFrame("EPF Contribution Rate Table " + age + "(" + percentage + "%)");
 		
 		TableColumnModel tableColumnModel = table.getColumnModel();
 		tableColumnModel.removeColumn(tableColumnModel.getColumn(0));
-		
-		
 
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		frame.getContentPane().add(mainPanel, BorderLayout.CENTER);
@@ -107,7 +107,7 @@ public class EpfMain implements ActionListener{
 		// TODO Auto-generated method stub
 		EpfController epfController = new EpfController();
 		if(event.getSource().equals(addButton)) {
-			epfController.newEpf(isSixty);
+			epfController.newEpf(isSixty, percentage);
 		}
 		
 		if(event.getSource().equals(editButton)) {
@@ -124,7 +124,7 @@ public class EpfMain implements ActionListener{
 					data[4] = model.getValueAt(selection[indexRow], 4);
 					//data[5] = model.getValueAt(selection[indexRow], 5);
 					
-					epfController.editEpf(data, selection[indexRow], isSixty);				
+					epfController.editEpf(data, selection[indexRow], isSixty, percentage);				
 				}else {
 					JOptionPane.showMessageDialog(null, "More than one row selected. Please select only one row!");
 				}

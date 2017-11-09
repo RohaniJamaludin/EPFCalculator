@@ -57,7 +57,7 @@ public List<Socso> findAll() throws SQLException {
 		connection = DriverManager.getConnection(ConnectDatabase.JDBC_URL);
 		statement = connection.createStatement();
 		
-		String query = "Select * from socso where isSixty = " + isSixty +
+		String query = "Select * from socso where isSixty = " + isSixty + 
 				" order by lowerBound ASC";
 
 		ResultSet resultSet;
@@ -119,13 +119,7 @@ public List<Socso> findAll() throws SQLException {
 
 		Socso socso = new Socso();
 		
-		String query = "";
-		if(grossSalary <= 4000) {
-			query = "Select * from socso where  lowerBound <= " + grossSalary + " AND upperBound >= " +  grossSalary +
-					" AND isSixty = " + isSixty;
-		}else {
-			query = "Select * from socso where  lowerBound <= " + grossSalary + " AND isSixty = " + isSixty;
-		}
+		String query = "Select * from socso where  lowerBound <= " + grossSalary + " AND isSixty = " + isSixty;
 		
 		ResultSet resultSet = statement.executeQuery(query);
 		
