@@ -29,28 +29,34 @@ public class EpfAdd implements ActionListener{
 	private JButton saveButton;
 	private JButton cancelButton;
 	private JLabel messageLabel;
+	private int percentage;
 	public static JTextField lowerBoundText;
 	public static JTextField upperBoundText;
 	public static JTextField employerShareText;
 	public static JTextField employeeShareText;
 	public static boolean isSixty;
 	
-	public EpfAdd (boolean isSixty) {
+	
+	public EpfAdd (boolean isSixty, int percentage) {
 		EpfAdd.isSixty = isSixty;
+		this.percentage = percentage;
 		initialize();
 	}
 	
 	private void initialize() {
 		EpfMain.footerPanel.getComponent(0).setEnabled(false); 
 		
-		String s;
+		String age;
 		if(isSixty) {
-			s = "Above 60";
+			age = "Above 60";
 		}else {
-			s = "Below 60";
+			age = "Below 60";
 		}
+
 		
-		dialog = new JDialog(EpfMain.frame,"Add EPF Contribution Rate " + s, true);
+		
+		
+		dialog = new JDialog(EpfMain.frame,"Add EPF Contribution Rate " + age + "(" + percentage + "%)", true);
 		dialog.addWindowListener(new WindowAdapter() {
 			public void  windowClosed(WindowEvent event) {
 				System.out.println("Closed");
@@ -215,7 +221,7 @@ public class EpfAdd implements ActionListener{
 				System.out.println("Save");
 				//save 
 				EpfController epfController = new EpfController();
-				if(epfController.saveEpf(isSixty)) {
+				if(epfController.saveEpf(isSixty, percentage)) {
 					dialog.dispose();
 					JOptionPane.showMessageDialog(null, "New data has been added!");
 				}else {

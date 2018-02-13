@@ -21,22 +21,36 @@ public class CreateDatabase {
 		String[] sqlQueryEpf = {"Create table epf " +
 				"(id int not null  GENERATED ALWAYS AS IDENTITY " + 
 				"(START WITH 1, INCREMENT BY 1), " +
-				"upperBound decimal(6,2) not null, " +
-				"lowerBound decimal(6,2) not null, " +
-				"employerShare decimal(6,2) not null, " +
-				"employeeShare decimal(6,2) not null, " +
+				"upperBound decimal(10,2) not null, " +
+				"lowerBound decimal(10,2) not null, " +
+				"employerShare decimal(10,2) not null, " +
+				"employeeShare decimal(10,2) not null, " +
+				"isSixty boolean not null, " +
+				"percentage int not null, " +
 				"PRIMARY KEY (id))", "epf"};
 		sqlQueryList.add(sqlQueryEpf);
 		
 		String[] sqlQuerySocso = {"Create table socso " +
 				"(id int not null  GENERATED ALWAYS AS IDENTITY " + 
 				"(START WITH 1, INCREMENT BY 1), " +
-				"upperBound decimal(6,2) not null, " +
-				"lowerBound decimal(6,2) not null, " +
-				"employerShare decimal(6,2) not null, " +
-				"employeeShare decimal(6,2) not null, " +
+				"upperBound decimal(10,2) not null, " +
+				"lowerBound decimal(10,2) not null, " +
+				"employerShare decimal(10,2) not null, " +
+				"employeeShare decimal(10,2) not null, " +
+				"isSixty boolean not null, " +
+				"percentage int not null, " +
 				"PRIMARY KEY (id))", "socso"};
 		sqlQueryList.add(sqlQuerySocso);
+		
+		String[] sqlQuerySIP = {"Create table sip " +
+				"(id int not null  GENERATED ALWAYS AS IDENTITY " + 
+				"(START WITH 1, INCREMENT BY 1), " +
+				"upperBound decimal(10,2) not null, " +
+				"lowerBound decimal(10,2) not null, " +
+				"employerShare decimal(10,2) not null, " +
+				"employeeShare decimal(10,2) not null, " +
+				"PRIMARY KEY (id))", "sip"};
+		sqlQueryList.add(sqlQuerySIP);
 		
 		Iterator<String[]> iterator = sqlQueryList.iterator();
 		

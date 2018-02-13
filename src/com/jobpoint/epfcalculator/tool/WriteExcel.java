@@ -53,35 +53,34 @@ public class WriteExcel {
         WorkbookSettings wbSettings = new WorkbookSettings();
 
         wbSettings.setLocale(new Locale("en", "EN"));
-
-        //WritableWorkbook workbook = Workbook.createWorkbook(file, wbSettings);
-        //workbook.createSheet("Report", 0);
-        
 			try {
 				Workbook workbook;
 				System.out.println(file.getAbsolutePath());
 				workbook = Workbook.getWorkbook(new File(EmployeeMain.fileName));
 				WritableWorkbook writeWorkBook = Workbook.createWorkbook(file, workbook);
-				//WritableSheet excelSheet = workbook.getSheet(0);
 				WritableSheet masterSheetBgs;
 				WritableSheet masterSheetZonage;
-				if(AppController.category == 1) {
+				WritableSheet sheetJp;
+				if(AppController.template == 1) {
 					masterSheetBgs = writeWorkBook.getSheet(0);
 					createContent(masterSheetBgs,"bgs");
 				}
 				
-				if(AppController.category == 2) {
+				if(AppController.template == 2) {
 					masterSheetZonage = writeWorkBook.getSheet(0);
 					createContent(masterSheetZonage, "zonage");
 					masterSheetBgs = writeWorkBook.getSheet(2);
 					createContent(masterSheetBgs, "bgs");
 				}
 				
-		       
+				if(AppController.template == 3) {
+					sheetJp = writeWorkBook.getSheet(0);
+					createContentPaySlip(sheetJp, "Sheet 1");
+				}
+				
 		        writeWorkBook.write();
 		        writeWorkBook.close();
 			} catch (BiffException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
     }
@@ -116,72 +115,68 @@ public class WriteExcel {
     	// Lets calculate the sum of it
     	int rowCount = EmployeeMain.model.getRowCount();
     	
-   /* 	StringBuffer buf = new StringBuffer();
-    	buf.append("SUM(A2:A10)");
-    	Formula f = new Formula(0, 10, buf.toString());
-    	sheet.addCell(f);
-    	buf = new StringBuffer();
-    	buf.append("SUM(B2:B10)");
-    	f = new Formula(1, 10, buf.toString());
-    	sheet.addCell(f);*/
-
-    	// now a bit of text
-    	for (int row = 0 ; row < rowCount; row++) {
-    		int columnEmployerEpf = 23;
-    		int columnEmployerSocso = 24;
-    		int columnEmployeeEpf = 25;
-    		int columnEmployeeSocso = 26;
-/*    		System.out.println(EmployeeMain.model.getValueAt(row, 8));
-    		System.out.println(EmployeeMain.model.getValueAt(row, 9));
-    		System.out.println(EmployeeMain.model.getValueAt(row, 10));
-    		System.out.println(EmployeeMain.model.getValueAt(row, 11));
-    		System.out.println(EmployeeMain.model.getValueAt(row, 12));*/
-    		if(EmployeeMain.model.getValueAt(row, 13).equals(sheetName)) {
-    			addNumber(sheet, (Integer)EmployeeMain.model.getValueAt(row, 12), columnEmployerEpf, (String)EmployeeMain.model.getValueAt(row, 8));
-    	    	addNumber(sheet, (Integer)EmployeeMain.model.getValueAt(row, 12), columnEmployerSocso, (String)EmployeeMain.model.getValueAt(row, 9));
-    	    	addNumber(sheet, (Integer)EmployeeMain.model.getValueAt(row, 12), columnEmployeeEpf, (String)EmployeeMain.model.getValueAt(row, 10));
-    	    	addNumber(sheet, (Integer)EmployeeMain.model.getValueAt(row, 12), columnEmployeeSocso, (String)EmployeeMain.model.getValueAt(row, 11));
-    		}
-    		
-    		
-    		// First column
-    		//addLabel(sheet, 0, i, "Boring text " + i);
-    		// Second column
-    		//addLabel(sheet, 1, i, "Another text");
-    	}
-
-
-    }
-    
-/*    private void createContent(WritableSheet sheet) throws WriteException,RowsExceededException {
-    	// Write a few number
-    	for (int i = 1; i < 10; i++) {
-    		// First column
-    		addNumber(sheet, 0, i, i + 10);
-    		// Second column
-    		addNumber(sheet, 1, i, i * i);
+    	int columnEmployerEpf = 0;
+		int columnEmployerSocso = 0;
+		int columnEmployerSip = 0;
+		int columnEmployeeEpf = 0;
+		int columnEmployeeSocso = 0;
+		int columnEmployeeSip = 0;
+		
+    	if(AppController.template == 1) {
+    		columnEmployerEpf = 23;
+    		columnEmployerSocso = 24;
+    		columnEmployerSip = 25;
+    		columnEmployeeEpf = 26;
+    		columnEmployeeSocso = 27;
+    		columnEmployeeSip = 28;
+    	}else if(AppController.template == 2){
+    		columnEmployerEpf = 21;
+    		columnEmployerSocso = 22;
+    		columnEmployerSip = 23;
+    		columnEmployeeEpf = 24;
+    		columnEmployeeSocso = 25;
+    		columnEmployeeSip = 26;
     	}
     	
-    	// Lets calculate the sum of it
-    	StringBuffer buf = new StringBuffer();
-    	buf.append("SUM(A2:A10)");
-    	Formula f = new Formula(0, 10, buf.toString());
-    	sheet.addCell(f);
-    	buf = new StringBuffer();
-    	buf.append("SUM(B2:B10)");
-    	f = new Formula(1, 10, buf.toString());
-    	sheet.addCell(f);
-
+    	
     	// now a bit of text
-    	for (int i = 12; i < 20; i++) {
-    		// First column
-    		addLabel(sheet, 0, i, "Boring text " + i);
-    		// Second column
-    		addLabel(sheet, 1, i, "Another text");
+    	for (int row = 0 ; row < rowCount; row++) {
+    		if(EmployeeMain.model.getValueAt(row, 16).equals(sheetName)) {
+    			addNumber(sheet, (Integer)EmployeeMain.model.getValueAt(row, 15), columnEmployerEpf, (String)EmployeeMain.model.getValueAt(row, 9));
+    	    	addNumber(sheet, (Integer)EmployeeMain.model.getValueAt(row, 15), columnEmployerSocso, (String)EmployeeMain.model.getValueAt(row, 10));
+    	    	addNumber(sheet, (Integer)EmployeeMain.model.getValueAt(row, 15), columnEmployerSip, (String)EmployeeMain.model.getValueAt(row, 11));
+    	    	addNumber(sheet, (Integer)EmployeeMain.model.getValueAt(row, 15), columnEmployeeEpf, (String)EmployeeMain.model.getValueAt(row, 12));
+    	    	addNumber(sheet, (Integer)EmployeeMain.model.getValueAt(row, 15), columnEmployeeSocso, (String)EmployeeMain.model.getValueAt(row, 13));
+    	    	addNumber(sheet, (Integer)EmployeeMain.model.getValueAt(row, 15), columnEmployeeSip, (String)EmployeeMain.model.getValueAt(row, 14));
+    		}
     	}
+    }
+    
+    private void createContentPaySlip(WritableSheet sheet, String sheetName) throws WriteException,RowsExceededException {
+    	// Lets calculate the sum of it
+ 
+    	int columnEmployerEpf = 12;
+		int columnEmployerSocso = 12;
+		int columnEmployerSip = 12;
+		int columnEmployeeEpf = 14;
+		int columnEmployeeSocso = 14;
+		int columnEmployeeSip = 14;
 
-
-    }*/
+		System.out.println((String)EmployeeMain.model.getValueAt(0, 9));
+		System.out.println((String)EmployeeMain.model.getValueAt(0, 10));
+		System.out.println((String)EmployeeMain.model.getValueAt(0, 11));
+		System.out.println(AppController.epfEmployerRowIndex);
+		
+    	for(int i = 0; i < EmployeeMain.model.getRowCount(); i++) {
+    		System.out.println(AppController.epfEmployerRowIndex[i]);
+    		addNumber(sheet, AppController.epfEmployerRowIndex[i], columnEmployerEpf, (String)EmployeeMain.model.getValueAt(0, 9));
+    	    addNumber(sheet, AppController.socsoEmployerRowIndex[i], columnEmployerSocso, (String)EmployeeMain.model.getValueAt(0, 10));
+    	    addNumber(sheet, AppController.sipEmployerRowIndex[i], columnEmployerSip, (String)EmployeeMain.model.getValueAt(0, 11));
+    	    addNumber(sheet, AppController.epfEmployeeRowIndex[i], columnEmployeeEpf, (String)EmployeeMain.model.getValueAt(0, 12));
+    	    addNumber(sheet, AppController.socsoEmployeeRowIndex[i], columnEmployeeSocso, (String)EmployeeMain.model.getValueAt(0, 13));
+    	    addNumber(sheet,AppController.sipEmployeeRowIndex[i], columnEmployeeSip, (String)EmployeeMain.model.getValueAt(0, 14));
+    	}
+    }
     
     private void addCaption(WritableSheet sheet, int column, int row, String s)
             throws RowsExceededException, WriteException {

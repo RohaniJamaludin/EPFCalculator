@@ -7,6 +7,7 @@ public class Epf {
 	private double employerShare;
 	private double employeeShare;
 	private boolean isSixty;
+	private int percentage;
 	
 	public Epf() {
 		
@@ -58,6 +59,14 @@ public class Epf {
 	
 	public void setIsSixty(boolean isSixty) {
 		this.isSixty = isSixty;
+	}
+	
+	public int getPercentage() {
+		return percentage;
+	}
+	
+	public void setPercentage(int percentage) {
+		this.percentage = percentage;
 	}
 
 

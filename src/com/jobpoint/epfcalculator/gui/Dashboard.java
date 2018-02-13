@@ -1,29 +1,20 @@
 package com.jobpoint.epfcalculator.gui;
 
-
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-
+import java.awt.GridLayout;
+import java.awt.Toolkit;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import com.jobpoint.epfcalculator.database.CreateDatabase;
 
 //import com.jobpoint.epfcalculator.database.CreateDatabase;
 
 
-public class Dashboard extends JFrame {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	//public static final TablePanel tablePanel = new TablePanel();
-
+public class Dashboard{
 	
-
+	public JFrame frame;
+	public static Dashboard dashboard;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -32,48 +23,54 @@ public class Dashboard extends JFrame {
 			public void run() {
 				try {
 					CreateDatabase.startDatabase();
-					Dashboard frame = new Dashboard();
-					frame.setVisible(true);
+					dashboard = new Dashboard();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-		
 	}
 
 	/**
 	 * Create the frame.
 	 */
 	public Dashboard() {
-		super();
-		initUI();
-	}
-	
-	private void initUI() {
 		createLayout();
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		setTitle("EPF/SOCSO Calculator");
-		setSize(new Dimension(1200,700));
-		setLocationRelativeTo(null);
-		
 	}
 	
 	private void createLayout() {
-		contentPane = new JPanel(new BorderLayout());
-		//contentPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		this.setContentPane(contentPane);
-		this.pack();
-		this.setVisible(true);
+		frame = new JFrame("EPF/SOCSO Calculator");
 		
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
-		//TablePanel tablePanel = new TablePanel();
+/*		JPanel contentPane = new JPanel(new BorderLayout());*/
+		
 		EmployeeMain employeeMain = new EmployeeMain();
-		contentPane.add(employeeMain.panel, BorderLayout.CENTER);	
+/*		Border border = contentPane.getBorder();
+		Border margin = new EmptyBorder(10,10,10,10);
+		contentPane.setBorder(new CompoundBorder(border, margin));
+		contentPane.add(employeeMain.initializePanel(), new GridLayout());	*/
 		
 		MenuBar menuBar = new MenuBar();
-		this.setJMenuBar(menuBar.createMenuBar());
+		frame.setJMenuBar(menuBar.createMenuBar());
+		
+		frame.setPreferredSize(new Dimension(1000, 500));
+		
+		frame.pack();
+		frame.setLayout(new GridLayout());
+		frame.getContentPane().add(employeeMain.initializePanel());
+		frame.setLocationRelativeTo(null);
+		
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+		int w = frame.getSize().width;
+		int h = frame.getSize().height;
+	    int x = (dimension.width-w)/2;
+	    int y = (dimension.height-h)/2;
+	    frame.setLocation(x, y);
+	    
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
 	}
 		
 }
