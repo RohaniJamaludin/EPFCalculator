@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.jobpoint.epfcalculator.model.Epf;
 import com.jobpoint.epfcalculator.model.Socso;
 
 public class CrudSocso {
@@ -119,7 +118,7 @@ public List<Socso> findAll() throws SQLException {
 
 		Socso socso = new Socso();
 		
-		String query = "Select * from socso where  lowerBound <= " + grossSalary + " AND isSixty = " + isSixty;
+		String query = "Select * from socso where  lowerBound <= " + grossSalary + " AND upperBound >=" + grossSalary + " AND isSixty = " + isSixty;
 		
 		ResultSet resultSet = statement.executeQuery(query);
 		

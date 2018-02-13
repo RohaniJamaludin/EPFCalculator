@@ -11,9 +11,10 @@ public class AlterTable {
 	//public static final String SQL_STATEMENT = "ALTER TABLE APP.EPF drop lowerBound";
 	//public static final String SQL_STATEMENT = "ALTER TABLE APP.SOCSO ADD lowerBoundTemp decimal(10,2)";
 	//public static final String SQL_STATEMENT = "ALTER TABLE APP.EPF ADD lowerBoundTemp decimal(10,2)";
-	public static final String SQL_STATEMENT = "ALTER TABLE APP.EPF ADD percentage int default 8";
+	//public static final String SQL_STATEMENT = "ALTER TABLE APP.EPF ADD percentage int default 8";
 	//public static final String SQL_STATEMENT = "RENAME COLUMN APP.SOCSO.lowerBoundTemp TO lowerBound ";
 	//public static final String SQL_STATEMENT = "RENAME COLUMN APP.EPF.lowerBoundTemp TO lowerBound ";
+	public static final String SQL_STATEMENT = "DROP TABLE APP.SIP";
 	/*		+ "second_bar_enter double, "
 			+ "third_bar_enter double, "
 			+ "first_bar_exit double, "

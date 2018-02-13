@@ -6,21 +6,21 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 
-
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-
 import com.jobpoint.epfcalculator.controller.EmployeeController;
 import com.jobpoint.epfcalculator.controller.EpfController;
+import com.jobpoint.epfcalculator.controller.SipController;
 import com.jobpoint.epfcalculator.controller.SocsoController;
 
 public class MenuBar implements ActionListener,ItemListener {
 	
 	JMenuBar menuBar;
-	JMenu menu, epfMenu, socsoMenu;
-	JMenuItem insertMenu, exportMenu, overSixtyEpfEightMenu, overSixtyEpfElevenMenu, belowSixtyEpfEightMenu, belowSixtyEpfElevenMenu , overSixtySocsoMenu, belowSixtySocsoMenu;
+	JMenu menu, epfMenu, socsoMenu, sipMenu;
+	JMenuItem insertMenu, exportMenu, overSixtyEpfEightMenu, overSixtyEpfElevenMenu, belowSixtyEpfEightMenu;
+	JMenuItem belowSixtyEpfElevenMenu , overSixtySocsoMenu, belowSixtySocsoMenu, sipItemMenu;
 
 	public JMenuBar createMenuBar() {
 		
@@ -106,6 +106,17 @@ public class MenuBar implements ActionListener,ItemListener {
 		overSixtySocsoMenu.addActionListener(this);
 		socsoMenu.add(overSixtySocsoMenu);
 		
+		sipMenu = new JMenu("SIP");
+		sipMenu.setMnemonic(KeyEvent.VK_T);
+		sipMenu.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
+		menu.add(sipMenu);
+		
+		sipItemMenu = new JMenuItem("SIP");
+		sipItemMenu.setMnemonic(KeyEvent.VK_T);
+		sipItemMenu.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
+		sipItemMenu.addActionListener(this);
+		sipMenu.add(sipItemMenu);
+		
 		return menuBar;
 		
 	}
@@ -114,13 +125,13 @@ public class MenuBar implements ActionListener,ItemListener {
 		if(event.getSource() == insertMenu) {
 			
 			EmployeeController employeeController = new EmployeeController();
-			employeeController.insertEmployee(EmployeeMain.dashboard);
+			employeeController.insertEmployee(Dashboard.dashboard);
 			//employeeController.showEmployee();			
 		}
 		
 		if(event.getSource().equals(exportMenu)) {
 			EmployeeController employeeController = new EmployeeController();
-			employeeController.exportEmployee(EmployeeMain.dashboard);
+			employeeController.exportEmployee(Dashboard.dashboard);
 			
 		}
 		
@@ -152,6 +163,11 @@ public class MenuBar implements ActionListener,ItemListener {
 		if(event.getSource().equals(overSixtySocsoMenu)) {
 			SocsoController socsoController = new SocsoController();
 			socsoController.showSocso(true);
+		}
+		
+		if(event.getSource().equals(sipItemMenu)) {
+			SipController sipController = new SipController();
+			sipController.showSip(true);
 		}
 	}
 

@@ -12,13 +12,16 @@ public class Employee {
     private double allowance;
     private double employerEpf;
     private double employerSocso;
+    private double employerSip;
     private double employeeEpf;
     private double employeeSocso;
+    private double employeeSip;
     private int row;
     private String sheet;
  
     public Employee(int no, String employeeNo, String name, String nric, double basicSalary, double grossSalary, double unpaidLeave,
-    		double allowance, double employerEpf, double employerSocso, double employeeEpf, double employeeSocso, int row, String sheet)
+    		double allowance, double employerEpf, double employerSocso, double employerSip, double employeeEpf, double employeeSocso,double employeeSip,
+    		int row, String sheet)
     {
         this.no = no;
         this.employeeNo = employeeNo;
@@ -30,8 +33,10 @@ public class Employee {
         this.unpaidLeave = unpaidLeave;
         this.employerEpf = employerEpf;
         this.employerSocso = employerSocso;
+        this.employerSip = employerSip;
         this.employeeEpf = employeeEpf;
         this.employeeSocso = employeeSocso;
+        this.employeeSip = employeeSip;
         this.row = row;
         this.sheet = sheet;
     }
@@ -120,6 +125,14 @@ public class Employee {
     	this.employerSocso = employerSocso;
     }
     
+    public double getEmployerSip() {
+    	return employerSip;
+    }
+    
+    public void setEmployerSip(double employerSip) {
+    	this.employerSip = employerSip;
+    }
+    
     public double getEmployeeEpf() {
     	return employeeEpf;
     }
@@ -134,6 +147,14 @@ public class Employee {
     
     public void setEmployeeSocso(double employeeSocso) {
     	this.employeeSocso = employeeSocso;
+    }
+    
+    public double getEmployeeSip() {
+    	return employeeSip;
+    }
+    
+    public void setEmployeeSip(double employeeSip) {
+    	this.employeeSip = employeeSip;
     }
     
     public int getRow() {

@@ -7,7 +7,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import com.jobpoint.epfcalculator.database.CrudSocso;
-import com.jobpoint.epfcalculator.gui.EpfMain;
 import com.jobpoint.epfcalculator.gui.SocsoAdd;
 import com.jobpoint.epfcalculator.gui.SocsoEdit;
 import com.jobpoint.epfcalculator.gui.SocsoMain;

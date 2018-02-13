@@ -33,7 +33,7 @@ public class EmployeeInsert  implements ActionListener{
 	private JButton okButton;
 	private JButton cancelButton;
 	private JButton browseButton;
-	public static JRadioButton categoryOneRadio, categoryTwoRadio, eightPercentRadio, elevenPercentRadio;
+	public static JRadioButton templateOneRadio, templateTwoRadio, templateThreeRadio,  eightPercentRadio, elevenPercentRadio;
 	
 	public EmployeeInsert() {
 		initialize();
@@ -47,7 +47,7 @@ public class EmployeeInsert  implements ActionListener{
 	private void initialize() {
 		
 		
-		dialog = new JDialog(dashboard, "Insert Data", true);
+		dialog = new JDialog(dashboard.frame, "Insert Data", true);
 		
 		JPanel mainPanel = new JPanel(new GridBagLayout());
 		mainPanel.applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -139,7 +139,6 @@ public class EmployeeInsert  implements ActionListener{
 		mainPanel.add(monthCombo, constraint);
 		monthCombo.setSelectedItem(currentMonth);
 		
-		
 		String[] years = new String[61];
 		int year = 1970;
 		for(int i = 0; i <= 60; i++) {
@@ -157,7 +156,7 @@ public class EmployeeInsert  implements ActionListener{
 		constraint.insets = new Insets(0, 0, 2, 10);
 		mainPanel.add(yearCombo, constraint);
 		
-		JLabel percentageLabel = new JLabel("Percentage");
+		JLabel percentageLabel = new JLabel("EPF Contribution");
 		constraint.fill = GridBagConstraints.HORIZONTAL;
 		constraint.gridx = 0;
 		constraint.gridy = 2;
@@ -189,7 +188,7 @@ public class EmployeeInsert  implements ActionListener{
 		percentButtonGroup.add(eightPercentRadio);
 		percentButtonGroup.add(elevenPercentRadio);
 		
-		JLabel categoryLabel = new JLabel("Category");
+		JLabel categoryLabel = new JLabel("Template");
 		constraint.fill = GridBagConstraints.HORIZONTAL;
 		constraint.gridx = 0;
 		constraint.gridy = 3;
@@ -198,28 +197,38 @@ public class EmployeeInsert  implements ActionListener{
 		constraint.insets = new Insets(0, 10, 2, 10);
 		mainPanel.add(categoryLabel,constraint);
 		
-		categoryOneRadio = new JRadioButton("Basic RM1100 - RM1350");
-		categoryOneRadio.setSelected(true);
+		templateOneRadio = new JRadioButton("Basic RM1100 - RM1350");
+		templateOneRadio.setSelected(true);
 		constraint.fill = GridBagConstraints.HORIZONTAL;
 		constraint.gridx = 1;
 		constraint.gridy = 3;
 		constraint.gridwidth = 1;
 		constraint.weightx = 1;
 		constraint.insets = new Insets(0, 10, 2, 5);
-		mainPanel.add(categoryOneRadio,constraint);
+		mainPanel.add(templateOneRadio,constraint);
 		
-		categoryTwoRadio = new JRadioButton("Basic RM1000");
+		templateTwoRadio = new JRadioButton("Basic RM1000");
 		constraint.fill = GridBagConstraints.HORIZONTAL;
 		constraint.gridx = 2;
 		constraint.gridy = 3;
 		constraint.gridwidth = 1;
 		constraint.weightx = 1;
 		constraint.insets = new Insets(0, 10, 2, 5);
-		mainPanel.add(categoryTwoRadio,constraint);
+		mainPanel.add(templateTwoRadio,constraint);
 		
-		ButtonGroup categoryButtonGroup = new ButtonGroup();
-		categoryButtonGroup.add(categoryOneRadio);
-		categoryButtonGroup.add(categoryTwoRadio);
+		templateThreeRadio = new JRadioButton("Payslip");
+		constraint.fill = GridBagConstraints.HORIZONTAL;
+		constraint.gridx = 3;
+		constraint.gridy = 3;
+		constraint.gridwidth = 1;
+		constraint.weightx = 1;
+		constraint.insets = new Insets(0, 10, 2, 5);
+		mainPanel.add(templateThreeRadio,constraint);
+		
+		ButtonGroup templateButtonGroup = new ButtonGroup();
+		templateButtonGroup.add(templateOneRadio);
+		templateButtonGroup.add(templateTwoRadio);
+		templateButtonGroup.add(templateThreeRadio);
 		
 		dialog.getContentPane().add(footerPanel,BorderLayout.PAGE_END);
 		
@@ -250,8 +259,6 @@ public class EmployeeInsert  implements ActionListener{
 		if(event.getSource().equals(browseButton)) {
 			String filePath = employeeController.getFilePath();
 			sourceFileText.setText(filePath);
-			//employeeController.showEmployee();
-			//dialog.dispose();
 		}
 		
 		if(event.getSource().equals(okButton)) {

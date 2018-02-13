@@ -15,8 +15,8 @@ public class EmployeeTableModel extends AbstractTableModel {
 	public List<Employee> employee;
 	
 	private final String[] columnNames = new String[] {
-			"No.", "Employee No.", "Name", "NRIC", "Basic Salary", "Gross Salary", "Unpaid Leave", "Allowance",
-			"Employer Epf", "Employer Socso", "Employee Epf", "Employee Socso", "Row in Excel", "Worksheet"
+			"No.", "#", "Employee No.", "Name", "NRIC", "Basic Salary", "Gross Salary", "Unpaid Leave", "Allowance",
+			"Employer Epf", "Employer Socso", "Employer Sip", "Employee Epf", "Employee Socso", "Employee Sip", "Row in Excel", "Worksheet"
     };
 	
 	public EmployeeTableModel(List<Employee> employee) {
@@ -52,50 +52,61 @@ public class EmployeeTableModel extends AbstractTableModel {
             return row.getNo();
         }
         else if(1 == columnIndex) {
-            return row.getEmployeeNo();
+            return employee.indexOf(row) + 1;
         }
         else if(2 == columnIndex) {
-            return row.getName();
+            return row.getEmployeeNo();
         }
         else if(3 == columnIndex) {
-            return row.getNric();
+            return row.getName();
         }
         else if(4 == columnIndex) {
+            return row.getNric();
+        }
+        else if(5 == columnIndex) {
             //return row.getBasicSalary();
         	return String.format("%.2f", row.getBasicSalary());
         }
-        else if(5 == columnIndex) {
+        else if(6 == columnIndex) {
             //return row.getGrossSalary();
         	return String.format("%.2f", row.getGrossSalary());
         }
-        else if(6 == columnIndex) {
+        else if(7 == columnIndex) {
             //return row.getUnpaidLeave();
             return String.format("%.2f", row.getUnpaidLeave());
         }
-        else if(7 == columnIndex) {
+        else if(8 == columnIndex) {
             //return row.getAllowance();
         	return String.format("%.2f", row.getAllowance());
         }
-        else if(8 == columnIndex) {
+        else if(9 == columnIndex) {
         	//return row.getEmployerEpf();
         	 return String.format("%.2f", row.getEmployerEpf());
         }
-        else if(9 == columnIndex) {
+        else if(10 == columnIndex) {
         	//return row.getEmployerSocso();
         	return String.format("%.2f", row.getEmployerSocso());
         }
-        else if(10 == columnIndex) {
+        else if(11 == columnIndex) {
+        	//return row.getEmployerSocso();
+        	return String.format("%.2f", row.getEmployerSip());
+        }
+        else if(12 == columnIndex) {
         	//return row.getEmployeeEpf();
         	return String.format("%.2f", row.getEmployeeEpf());
         }
-        else if(11 == columnIndex) {
+        else if(13 == columnIndex) {
         	//return row.getEmployeeSocso();
         	return String.format("%.2f", row.getEmployeeSocso());
         }
-        else if(12 == columnIndex) {
+        else if(14 == columnIndex) {
+        	//return row.getEmployeeSocso();
+        	return String.format("%.2f", row.getEmployeeSip());
+        }
+        else if(15 == columnIndex) {
         	return row.getRow();
         }
-        else if(13 == columnIndex) {
+        else if(16 == columnIndex) {
         	return row.getSheet();
         }
         return null;
